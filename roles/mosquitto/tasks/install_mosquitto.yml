@@ -1,0 +1,22 @@
+- name: install mosquitto apt-key
+  apt_key:
+    url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
+- name: install mosquitto apt-repo
+  apt_repository:
+    repo: deb http://repo.mosquitto.org/debian stretch main
+
+- name: install mosquitto MQTT
+  apt:
+    update_cache: yes
+    name: mosquitto
+    state: latest
+- name: Configure mosquitto for websockets
+  copy:
+    src: mosquitto-websockets.conf
+    owner: root
+    dest: /etc/mosquitto/conf.d/
+- name: restart mosquitto
+  systemd:
+    name: "mosquitto.service"
+    enabled: yes
+    state: restarted

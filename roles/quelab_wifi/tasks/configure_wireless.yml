@@ -1,0 +1,24 @@
+---
+- name: set wpa_supplicant.conf file
+  template:
+    owner: root
+    src: wpa_supplicant.conf.j2
+    dest: /etc/wpa_supplicant/wpa_supplicant.conf
+
+- name: create wireless networking config script
+  template:
+    owner: root
+    src: 40-wireless.network.j2
+    dest: /etc/systemd/network/40-wireless.network
+
+- name: Create Systemd Interface Service
+  template:
+    owner: root
+    src: wpa_supplicant@wireless_adapter.service.j2
+    dest: "/etc/systemd/system/wpa_supplicant@{{wireless_adapter}}.service"
+
+- name: Enable Wireless Interface vis systemd
+  systemd:
+    name: "wpa_supplicant@{{wireless_adapter}}.service"
+    enabled: yes
+    state: started

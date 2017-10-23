@@ -1,0 +1,15 @@
+[Unit]
+Description=Quelab RFID Reader
+BindsTo=dev-rfidreader.device
+After=dev-rfidreader.device
+
+[Service]
+Type=idle
+Restart=always
+RestartSec=3
+User=doorctrl
+EnvironmentFile=/home/doorctrl/quelab-rfid-controller/rfidreader.env
+ExecStart=/usr/local/bin/rfidreader /dev/rfidreader -c /home/doorctrl/cached.pickle -m localhost
+
+[Install]
+WantedBy=multi-user.target dev-rfidreader.device

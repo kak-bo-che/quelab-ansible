@@ -1,0 +1,4 @@
+- name: Install AMD drivers
+  import_tasks: install_amd_drivers.yml
+  tags:
+    - install

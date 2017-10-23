@@ -1,0 +1,14 @@
+[Unit]
+Description=Quelab Signing Page
+After=multi-user.target
+
+[Service]
+User=doorctrl
+Group=doorctrl
+WorkingDirectory=/home/doorctrl/quelab-signin/
+EnvironmentFile=/home/doorctrl/quelab-signin/rfidreader.env
+Environment=PYTHONPATH=/home/doorctrl/quelab-signin/src/
+ExecStart=/usr/bin/python3 /home/doorctrl/quelab-signin/scripts/quelab_signin -s /home/doorctrl/quelab-signin/dist
+
+[Install]
+WantedBy=multi-user.target

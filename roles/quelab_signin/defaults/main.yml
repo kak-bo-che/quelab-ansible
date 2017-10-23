@@ -1,0 +1,4 @@
+---
+signin_repo: https://github.com/kak-bo-che/quelab-signin
+signin_user: doorctrl
+signin_dir: "/home/{{signin_user}}/quelab-signin"

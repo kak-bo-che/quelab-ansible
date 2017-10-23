@@ -1,0 +1,5 @@
+- name: Install mosquitto MQTT
+  import_tasks: install_mosquitto.yml
+  tags:
+    - install
+

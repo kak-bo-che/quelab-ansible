@@ -1,0 +1,48 @@
+- name: download quelab-rfid-controller
+  git:
+    repo: https://github.com/kak-bo-che/quelab-rfid-controller.git
+    dest: /home/doorctrl/quelab-rfid-controller
+
+- name: setquelab-rfid-controller to expected user:group
+  file:
+    path: /home/doorctrl/quelab-rfid-controller
+    recurse: yes
+    state: directory
+    group: doorctrl
+    owner: doorctrl
+
+- name: install dependencies for rfid-controller
+  pip:
+    executable: pip3
+    state: latest
+    requirements: /home/doorctrl/quelab-rfid-controller/requirements.txt
+
+- name: install rfid reader service
+  command: pip3 install --upgrade .
+  args:
+    chdir: /home/doorctrl/quelab-rfid-controller
+
+- name: set api key for wild apricot
+  template:
+    mode: 0700
+    src: rfidreader.env
+    dest: /home/doorctrl/quelab-rfid-controller/rfidreader.env
+
+- name: set rfidreader.env to expected user:group
+  file:
+    path: /home/doorctrl/quelab-rfid-controller/rfidreader.env
+    group: doorctrl
+    owner: doorctrl
+
+- name: Copy rfid_reader.service file
+  copy:
+    src: rfid_reader.service
+    owner: root
+    dest: /lib/systemd/system/rfid_reader.service
+
+- name: Enable quelab_rfid_reader service
+  service:
+    enabled: yes
+    name: rfid_reader.service
+    daemon_reload: yes
+    state: restarted

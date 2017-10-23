@@ -1,0 +1,13 @@
+---
+
+- name: Setup USB rfid reader device
+  import_tasks: rfid_device.yml
+  tags:
+    - install
+    - rfid_reader
+
+- name: Setup USB rfid reader service
+  import_tasks: rfid_reader_service.yml
+  tags:
+    - install
+    - rfid_service

@@ -1,0 +1,1 @@
+ KERNEL=="wlp11s2", ATTR{address}=="00:0e:35:d9:b8:3c", NAME="wlan0"

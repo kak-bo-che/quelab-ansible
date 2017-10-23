@@ -1,0 +1,11 @@
+- name: Setup Wireless Tools
+  import_tasks: install_wireless.yml
+  tags:
+    - install
+    - networking
+
+- name: Configure Wireless
+  import_tasks: configure_wireless.yml
+  tags:
+    - configure
+    - networking

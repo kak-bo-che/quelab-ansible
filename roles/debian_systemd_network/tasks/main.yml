@@ -1,0 +1,5 @@
+- name: Setup Systemd Networking
+  import_tasks: enable_services.yml
+  tags:
+    - install
+    - networking

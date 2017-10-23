@@ -1,0 +1,4 @@
+- name: ensure amd firmware is installed
+  apt: name=firmware-amd-graphics state=latest
+- name: ensure xorg driver is installed for amd video
+  apt:  name=xserver-xorg-video-ati state=latest

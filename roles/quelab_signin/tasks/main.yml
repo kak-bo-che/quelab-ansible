@@ -1,0 +1,68 @@
+---
+# install dependencies
+- name: ensure pip3 is installed correctly
+  apt: name=python3-pip state=latest
+- name: ensure git is installed
+  apt: name=git state=latest
+- name: ensure jq is installed
+  apt: name=jq state=installed
+- name: ensure curl is installed
+  apt: name=curl state=installed
+
+# install latest source/static pages
+- name: download quelab-signin
+  git:
+    repo: https://github.com/kak-bo-che/quelab-signin
+    dest: "{{signin_dir}}"
+
+- name: set quelab-signin to expected user:group
+  file:
+    path: "{{signin_dir}}"
+    recurse: yes
+    state: directory
+    group: "{{signin_user}}"
+    owner: "{{signin_user}}"
+
+- name: ensure python requirements are installed
+  pip:
+    executable: pip3
+    requirements: "{{signin_dir}}/requirements.txt"
+
+- name: acquire latest UI static resources
+  shell: "scripts/fetch_static.sh {{signin_dir}}/dist"
+  args:
+    chdir: "{{signin_dir}}"
+
+- name: set quelab-signin/dist to expected user:group
+  file:
+    path: "{{signin_dir}}/dist"
+    recurse: yes
+    state: directory
+    group: "{{signin_user}}"
+    owner: "{{signin_user}}"
+
+# configure
+- name: set api key for wild apricot
+  template:
+    mode: 0700
+    src: rfidreader.env
+    dest: "{{signin_dir}}/rfidreader.env"
+
+- name: set rfidreader.env to expected user:group
+  file:
+    path: "{{signin_dir}}/rfidreader.env"
+    group: "{{signin_user}}"
+    owner: "{{signin_user}}"
+
+- name: Copy quelab-signin.service file
+  copy:
+    src: quelab_signin.service
+    owner: root
+    dest: /lib/systemd/system/quelab_signin.service
+
+- name: Enable quelab_signin service
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: quelab_signin.service
+    state: restarted

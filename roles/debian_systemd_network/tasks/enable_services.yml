@@ -1,0 +1,21 @@
+- name: Enable Systemd Networkd
+  systemd: name=systemd-networkd enabled=yes
+
+- name: Enable Systemd Resolved
+  systemd: name=systemd-resolved enabled=yes state=started
+
+- name: link resolv.conf to systemd version
+  file:
+    path: /etc/resolv.conf
+    force: yes
+    state: link
+    src: /run/systemd/resolve/resolv.conf
+
+- name: create wired networking config script
+  template:
+    owner: root
+    src: 20-dhcp.network.j2
+    dest: /etc/systemd/network/20-dhcp.network
+
+- name: Start Systemd Networkd
+  systemd: name=systemd-networkd state=started

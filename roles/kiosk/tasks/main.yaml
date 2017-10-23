@@ -1,0 +1,28 @@
+---
+- name: ensure Xorg is installed correctly
+  apt: name=xorg state=latest
+- name: ensure nodm is installed
+  apt:  name=nodm state=latest
+- name: ensure firefox-esr is installed
+  apt:  name=firefox-esr state=latest
+- name: ensure chromium is installed for kiosk mode
+  apt: name=chromium state=latest
+- name: add quelab user
+  user: name=quelab password="{{quelab_password}}"
+- name: Setup nodm user as quelab
+  lineinfile:
+    dest: /etc/default/nodm
+    regexp: '^NODM_USER='
+    line: 'NODM_USER=quelab'
+- name: Setup chromium to run by default in kiosk mode
+  blockinfile:
+    dest: /home/quelab/.xsession
+    create: yes
+    owner: quelab
+    group: quelab
+    block: |
+      #!/usr/bin/bash
+      # xset dpms 0 0 0 && xset s noblank && xset s off
+      # DISPLAY=:0 xset dpms force on
+      chromium --start-maximized --disable-session-crashed-bubble --disable-infobars --kiosk http://localhost:8888
+
