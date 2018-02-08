@@ -1,0 +1,5 @@
+---
+- name: download quelab shelf lighting program
+  git:
+    repo: https://github.com/kak-bo-che/shelflights.git
+    dest: /opt/shelflights

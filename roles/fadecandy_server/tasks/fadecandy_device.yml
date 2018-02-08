@@ -1,0 +1,8 @@
+- name: Create udev rule for fadecandy controller
+  copy:
+    src: 60-embedded_devices.rules
+    owner: root
+    dest: /etc/udev/rules.d/60-embedded_devices.rules
+
+- name: Reload udev rules
+  command: udevadm control --reload

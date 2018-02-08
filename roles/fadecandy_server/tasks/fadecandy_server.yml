@@ -1,0 +1,23 @@
+- name: download fadecandy repo
+  git:
+    repo: https://github.com/scanlime/fadecandy.git
+    dest: /opt/fadecandy
+
+- name: copy fadecandy config file
+  copy:
+    src: config.json
+    owner: root
+    dest: /opt/fadecandy/config.json
+
+- name: Copy fadecandy service file
+  copy:
+    src: fadecandy_server.service
+    owner: root
+    dest: /lib/systemd/system/fadecandy_server.service
+
+- name: Enable fadecandy server service
+  service:
+    enabled: yes
+    name: fadecandy_server.service
+    daemon_reload: yes
+    # state: restarted

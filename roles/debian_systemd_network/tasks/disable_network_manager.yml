@@ -1,0 +1,12 @@
+- name: Check if NetworkManager exists
+  stat: path=/lib/systemd/system/NetworkManager.service
+  register: network_manager
+
+- name: Disable Network Manager
+  systemd: name=NetworkManager.service enabled=no state=stopped
+  when: network_manager.stat.exists
+
+- name: move network manager service to completely disable it
+  command: mv /lib/systemd/system/NetworkManager.service /lib/systemd/system/NetworkManager.service.BAK
+  args:
+    removes: /lib/systemd/system/NetworkManager.service

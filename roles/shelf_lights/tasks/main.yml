@@ -1,0 +1,12 @@
+---
+- name: Install Shelf lighting program
+  import_tasks: shelf_program.yml
+  tags:
+    - install
+    - shelf_light
+    
+- name: Setup Shelf Lighting Service
+  import_tasks: shelf_service.yml
+  tags:
+    - shelf_light
+

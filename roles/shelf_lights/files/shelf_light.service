@@ -1,0 +1,14 @@
+[Unit]
+Description=Shelf Lighting Program
+BindsTo=fadecandy_server.service
+After=fadecandy_server.service
+
+[Service]
+KillSignal=SIGKILL
+User=admin
+Group=admin
+WorkingDirectory=/opt/shelflights/src/arcadeshelves
+ExecStart=/opt/shelflights/src/arcadeshelves/lava_lamp.py -l /opt/shelflights/shelves.json
+
+[Install]
+WantedBy=multi-user.target fadecandy_server.service

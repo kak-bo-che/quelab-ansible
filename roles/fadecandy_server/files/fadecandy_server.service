@@ -1,0 +1,15 @@
+[Unit]
+Description=Fadecandy Server
+BindsTo=dev-fadecandy.device
+After=dev-fadecandy.device
+
+[Service]
+KillSignal=SIGKILL
+User=admin
+Group=admin
+WorkingDirectory=/opt/fadecandy/bin/
+ExecStart=/opt/fadecandy/bin/fcserver-rpi /opt/fadecandy/config.json
+
+[Install]
+WantedBy=multi-user.target dev-fadecandy.device
+

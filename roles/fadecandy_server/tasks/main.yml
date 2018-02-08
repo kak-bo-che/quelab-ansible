@@ -1,0 +1,13 @@
+---
+- name: Setup USB fadecandy controller device
+  import_tasks: fadecandy_device.yml
+  tags:
+    - install
+    - fadecandy_controller
+    
+- name: Setup Open Pixel Controller
+  import_tasks: fadecandy_server.yml
+  tags:
+    - install
+    - open_pixel
+

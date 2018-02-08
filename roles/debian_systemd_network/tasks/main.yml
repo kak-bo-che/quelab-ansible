@@ -3,3 +3,8 @@
   tags:
     - install
     - networking
+
+- name: Disable NetworkManager
+  import_tasks: disable_network_manager.yml
+  tags:
+    - networking

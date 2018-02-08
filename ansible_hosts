@@ -2,6 +2,7 @@
 
 [quelab]
 doorctrl wireless_adapter=wlp11s2 wpa_supplicant_driver=wext
+orangepi2 wireless_adapter=wlan0 wpa_supplicant_driver=nl80211
 
 [kiosks]
 doorctrl
