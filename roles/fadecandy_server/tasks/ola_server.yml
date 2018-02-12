@@ -1,0 +1,59 @@
+---
+- name: install Open Lighting Architecture
+  apt:
+    update_cache: yes
+    name: ola
+    default_release: jessie-backports
+- name: set defaults for olad
+  copy:
+    content: "DAEMON_ARGS=\"--syslog --log-level 3  --config-dir /etc/ola -i 0.0.0.0\""
+    dest: /etc/default/ola
+    
+- name: copy fadecandy config file
+  copy:
+    src: ola-openpixelcontrol.conf
+    owner: olad
+    dest: /etc/ola/ola-openpixelcontrol.conf
+
+- name: add ola to sudoers for light control
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^olad'
+    line: 'olad ALL=(ALL) NOPASSWD: /bin/systemctl reload-or-restart shelf_light'
+    validate: 'visudo -cf %s'    
+
+- name: create scene file
+  copy: 
+    content: "1"
+    dest: "{{shelf_scene_file}}"
+    force: no 
+    owner: olad
+    mode: 0644
+
+- name: create trigger adapter script
+  copy:
+    src: trigger_adapter.sh
+    dest: /etc/ola/trigger_adapter.sh
+    owner: olad
+    mode: 0744
+
+- name: create ola_trigger shelf scene config file
+  copy:
+    owner: olad
+    group: olad
+    content: "1  %  `/etc/ola/trigger_adapter.sh \"${slot_value}\" \"{{shelf_scene_file}}\"`\n\n"
+    dest: /etc/ola/shelf_scene_selection.conf
+
+- name: Copy shelf trigger service
+  copy:
+    src: ola_shelf_trigger.service
+    owner: root
+    dest: /lib/systemd/system/ola_shelf_trigger.service
+
+- name: Enable shelf_trigger server service
+  service:
+    enabled: yes
+    name: ola_shelf_trigger.service
+    daemon_reload: yes
+    # state: restarted

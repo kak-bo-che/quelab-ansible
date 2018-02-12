@@ -1,0 +1,19 @@
+- hosts: orangepi2
+  remote_user: admin
+  become: yes
+  become_method: sudo
+  vars_files:
+    - ../vars/doorctrl.yml
+  vars:
+    quelab_password: "{{vault_quelab_password}}"
+    quelab_psk: "{{vault_quelab_psk}}"
+    cactus_psk: "{{vault_cactus_psk}}"
+    shelf_scene_file: "/etc/ola/shelf_scene"
+    shelf_universe: 2
+  roles:
+    - quelab_wifi
+    - debian_systemd_network
+    - fadecandy_server
+    - shelf_lights
+
+

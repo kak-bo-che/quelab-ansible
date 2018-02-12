@@ -1,0 +1,16 @@
+[Unit]
+Description=Shelf Lighting Program
+BindsTo=fadecandy_server.service
+After=fadecandy_server.service
+
+[Service]
+KillSignal=SIGKILL
+ExecReload=/bin/kill -HUP $MAINPID
+User=admin
+Group=admin
+Environment=PYTHONPATH=/opt/shelflights/src
+WorkingDirectory=/opt/shelflights/src/arcadeshelves
+ExecStart=/opt/shelflights/src/arcadeshelves/daemon.py -l /opt/shelflights/shelves.json -n {{shelf_scene_file}}
+
+[Install]
+WantedBy=multi-user.target fadecandy_server.service

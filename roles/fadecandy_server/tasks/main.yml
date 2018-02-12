@@ -11,3 +11,8 @@
     - install
     - open_pixel
 
+- name: Install OLA Server
+  import_tasks: ola_server.yml
+  tags:
+    - install
+    - ola

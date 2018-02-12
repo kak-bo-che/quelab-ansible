@@ -1,12 +1,13 @@
 - name: Copy shelf light service file
-  copy:
-    src: shelf_light.service
+  template:
+    src: shelf_light.service.j2
     owner: root
     dest: /lib/systemd/system/shelf_light.service
 
 - name: Enable shelf light service
   service:
     enabled: yes
+    state: started
     name: shelf_light.service
     daemon_reload: yes
     # state: restarted

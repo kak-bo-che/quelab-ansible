@@ -1,0 +1,18 @@
+[Unit]
+Description=DMX Trigger for Shelf Lighting
+BindsTo=olad.service
+After=olad.service
+StartLimitBurst=5
+StartLimitIntervalSec=10
+
+[Service]
+KillSignal=SIGKILL
+Restart=always
+RestartSec=5
+User=olad
+Group=olad
+WorkingDirectory=/opt/shelflights/
+ExecStart=/usr/bin/ola_trigger -u 2 -l3 /etc/ola/shelf_scene_selection.conf
+
+[Install]
+WantedBy=multi-user.target olad.service
