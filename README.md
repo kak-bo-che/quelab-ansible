@@ -10,10 +10,15 @@ le-playbooks quelab/ansible bash
 ```bash
 ssh-agent bash
 ssh-add /root/id_rsa_quelab
-ansible-playbook -i ansible_hosts doorctrl.yml --ask-vault-pass
+export ANSIBLE_ROLES_PATH=$(pwd)/roles
+# inventory is set to an ip address here because dns doesn't work within quelab
+# all hosts should be done in the same way instead of using the inventory file
+ansible-playbook -i "10.1.10.123," playbooks/doorctrl.yml --ask-vault-pass
 ansible-playbook -i ansible_hosts playbooks/gameroomshelves.yml --ask-vault-pass 
+
 ansible-playbook -i ansible_hosts playbooks/gameroomshelves.yml --vault-password-file=/root/.vault_pass
 ansible-playbook -i ansible_hosts doorctrl.yml --vault-password-file=/root/.vault_pass --check
+
 ansible-playbook -i ansible_hosts playbooks/gameroomshelves.yml --vault-password-file=/root/.vault_pass --tags shelf_light
 
 ## New Host setup
