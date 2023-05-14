@@ -5,9 +5,9 @@
 - name: ensure git is installed
   apt: name=git state=latest
 - name: ensure jq is installed
-  apt: name=jq state=installed
+  apt: name=jq state=present
 - name: ensure curl is installed
-  apt: name=curl state=installed
+  apt: name=curl state=present
 
 # install latest source/static pages
 - name: download quelab-signin

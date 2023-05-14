@@ -1,8 +1,13 @@
 127.0.0.1
 
 [quelab]
-doorctrl wireless_adapter=wlp11s2 wpa_supplicant_driver=wext
+doorctl ansible_host=127.0.0.110.1.10.184 wireless_adapter=wlp11s2 wpa_supplicant_driver=wext
 orangepi2 wireless_adapter=wlan0 wpa_supplicant_driver=nl80211
 
 [kiosks]
-doorctrl
+#doorctrl ansible_host=192.168.68.90 wireless_adapter=wlp2s2 wpa_supplicant_driver=wext
+#doorctrl ansible_host=192.168.68.90 wireless_adapter=wlan0 wpa_supplicant_driver=wext
+doorctrl ansible_host=192.168.68.91 wireless_adapter=wlan0 wpa_supplicant_driver=wext
+
+[3dprinters]
+ender3-01 ansible_host=ender3-01.local

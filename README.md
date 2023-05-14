@@ -18,7 +18,10 @@ ansible-playbook -i ansible_hosts playbooks/gameroomshelves.yml --vault-password
 
 ## New Host setup
 add admin user
-setup no password required for sudo, remove other passwords?
+setup no password required for sudo,
+other subsequent entries may block this one
+```admin   ALL=(ALL) NOPASSWD: ALL```
+remove other passwords?
 add ~/.ssh/authoroized_keys with quelab_pub key
 
 
@@ -28,3 +31,10 @@ apk add ansible
 ServerAliveInterval 30
 
 /usr/bin/ola_trigger -u 2 -l3 /opt/shelflights/shelf_lights.conf
+
+
+## Raspberry pi ....
+apt-get update 
+install sudo vim python3 firmware-realtek python-is-python3ansible-playbook -i ansible_hosts doorctrl.yml --vault-password-file=.vault_passh
+hostnamectl set-hostname doorctrl
+/usr/sbin/adduser ...
