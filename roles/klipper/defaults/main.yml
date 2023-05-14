@@ -1,0 +1,6 @@
+---
+klipper_user: admin
+klipper_dir: "/home/{{klipper_user}}/kiauh"
+config_dir: "/home/{{klipper_user}}/printer_data/config"
+klipper_home: "/home/{{klipper_user}}"
+mpu_serial: "/dev/serial/by-id/usb-Klipper_rp2040_E660D0511374B730-if00"

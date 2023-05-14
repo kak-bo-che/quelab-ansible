@@ -1,0 +1,9 @@
+- hosts: ender3-01
+  remote_user: admin
+  become: yes
+  become_method: sudo
+  roles:
+    - klipper
+
+
+

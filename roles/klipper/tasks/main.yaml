@@ -1,0 +1,43 @@
+---
+- name: Update apt-get repo and cache
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+- name: ensure git is installed
+  apt: name=git state=latest
+- name: download kiauh
+  git:
+    repo: https://github.com/th33xitus/kiauh.git
+    dest: "{{klipper_dir}}"
+- name: set kiauh to expected user:group
+  file:
+    path: "{{klipper_dir}}"
+    recurse: yes
+    state: directory
+    group: "{{klipper_user}}"
+    owner: "{{klipper_user}}"
+- name: copy printer config
+  copy:
+    src: printer.cfg
+    owner: admin
+    dest: "{{config_dir}}/printer.cfg"
+- name: copy mechanical gantry command config
+  copy:
+    src: mechanical_gantry_level_tmc2209.cfg
+    owner: admin
+    dest: "{{config_dir}}/mechanical_gantry_level_tmc2209.cfg"
+- name: copy mpu config
+  copy:
+    src: mpu.cfg
+    owner: admin
+    dest: "{{config_dir}}/mpu.cfg"
+- name: Numpy dependencies
+  apt:
+    pkg:
+      - python3-numpy
+      - python3-matplotlib
+      - libatlas-base-dev
+    state: latest
+    update_cache: true 
+- name: Install Klipper numpy
+  shell: klippy-env/bin/pip install -v numpy
+  args:
+    chdir: "{{klipper_home}}"
