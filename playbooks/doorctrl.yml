@@ -1,9 +1,9 @@
-- hosts: kiosks
+- hosts: all
   remote_user: admin
   become: yes
   become_method: sudo
   vars_files:
-    - vars/doorctrl.yml
+    - ../vars/doorctrl.yml
   vars:
     # wild_apricot_api_key: 4fy63rfn598ip4svqkse8ic7eb9rcv
     wild_apricot_api_key: "{{vault_wild_apricot_api_key}}"
