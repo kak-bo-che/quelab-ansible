@@ -14,11 +14,11 @@
     state: directory
     group: "{{klipper_user}}"
     owner: "{{klipper_user}}"
-- name: copy printer config
+- name: copy homing_override config (should be optional)
   copy:
-    src: printer.cfg
+    src: homing_override.cfg
     owner: admin
-    dest: "{{config_dir}}/printer.cfg"
+    dest: "{{config_dir}}/homing_override.cfg"
 - name: copy mechanical gantry command config
   copy:
     src: mechanical_gantry_level_tmc2209.cfg
@@ -29,6 +29,26 @@
     src: mpu.cfg
     owner: admin
     dest: "{{config_dir}}/mpu.cfg"
+- name: copy klipper macros
+  copy:
+    src: macros.cfg
+    owner: admin
+    dest: "{{config_dir}}/macros.cfg"
+- name: copy klipper macros (cheetah needs rework)
+  copy:
+    src: cheetah_macros.cfg
+    owner: admin
+    dest: "{{config_dir}}/cheetah_macros.cfg"
+- name: create printer config
+  template:
+    owner: admin
+    src: "{{printer_cfg}}.j2"
+    dest: "{{config_dir}}/printer.cfg"   
+# - name: copy printer config
+#   copy:
+#     src: printer.cfg
+#     owner: admin
+#     dest: "{{config_dir}}/printer.cfg"
 - name: Numpy dependencies
   apt:
     pkg:

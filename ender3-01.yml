@@ -2,6 +2,8 @@
   remote_user: admin
   become: yes
   become_method: sudo
+  vars:
+    mpu_serial: /dev/serial/by-id/usb-Klipper_stm32g0b1xx_2F002E000B504B5735313920-if00
   roles:
     - klipper
 

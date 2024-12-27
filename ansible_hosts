@@ -11,3 +11,5 @@ doorctrl ansible_host=192.168.68.91 wireless_adapter=wlan0 wpa_supplicant_driver
 
 [3dprinters]
 ender3-01 ansible_host=ender3-01.local
+ender3-02 ansible_host=ender3-02.local
+voron0-01 ansible_host=voron0-01.local
