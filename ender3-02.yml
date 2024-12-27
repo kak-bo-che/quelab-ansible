@@ -1,0 +1,9 @@
+- hosts: ender3-02
+  remote_user: admin
+  become: yes
+  become_method: sudo
+  vars:
+    mpu_serial: /dev/serial/by-id/usb-Klipper_stm32g0b1xx_4E001B001250415833323520-if00
+    z_offset: 3.163
+  roles:
+    - klipper
